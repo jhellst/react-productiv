@@ -13,10 +13,20 @@ import React, { useState } from "react";
 function TodoForm({initialFormData, handleSave}) {
 
   /** Update form input. */
-  function handleChange(evt) { }
+  function handleChange(evt) {
+    const { name, value } = evt.target;
+    handleSave(formData => ({
+      ...formData,
+      [name]: value,
+    }));
+  }
 
   /** Call parent function and clear form. */
-  function handleSubmit(evt) { }
+  function handleSubmit(evt) {
+    evt.preventDefault();
+    // addBox(formData);
+    handleSave(initialFormData);
+  }
 
   return (
       <form className="NewTodoForm" onSubmit={handleSubmit}>
