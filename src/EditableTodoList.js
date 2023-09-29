@@ -13,15 +13,16 @@ import { v4 as uuid } from 'uuid';
  */
 
 function EditableTodoList({ todos, update, remove }) {
+  console.log(todos[0].id);
   return (
     <div>
       {/*   FIXME  */}
       {todos.map(todo =>
         <EditableTodo
-          key = {uuid()}
+          key={todo.id}
           todo={todo}
           updateTodo={update}
-          deleteTodo={remove}
+          deleteTodo={() => remove(todo.id)}
         />)}
     </div>
   );
