@@ -21,7 +21,8 @@ function TodoApp({ initialTodos = [] }) {
 
   /** add a new todo to list */
   function create(newTodo) {
-    setTodos(todos => [...todos, newTodo]);
+    // newTodo.id = uuid(); // Create id here. (More react-friendly method shown below)
+    setTodos(todos => [...todos, {...newTodo, id: uuid()}]);
   }
 
   /** update a todo with updatedTodo */
@@ -40,7 +41,7 @@ function TodoApp({ initialTodos = [] }) {
 
         <div className="col-md-6">
           {todos.length > 0 ?
-            <EditableTodoList todos={todos} updateTodo={update} deleteTodo={remove} /> :
+            <EditableTodoList todos={todos} update={update} remove={remove} /> :
             <span className="text-muted">You have no todos.</span>
           }
         </div>
@@ -49,7 +50,7 @@ function TodoApp({ initialTodos = [] }) {
           {todos.length > 0 &&
             <section className="mb-4">
               <h3>Top Todo</h3>
-              <TopTodo />
+              <TopTodo todos={todos}/>
             </section>}
 
           <section>

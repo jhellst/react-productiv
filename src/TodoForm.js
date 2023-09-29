@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { v4 as uuid } from 'uuid';
 
 
 /** Form for adding.
@@ -18,7 +17,6 @@ function TodoForm({ initialFormData, handleSave }) {
   /** Update form input. */
   function handleChange(evt) {
     const { name, value } = evt.target;
-    console.log("NAME", name.val, "VAL", value.val);
     setFormData(formData => ({
       ...formData,
       [name]: value,
@@ -29,7 +27,7 @@ function TodoForm({ initialFormData, handleSave }) {
   /** Submit form: call function from parent & clear inputs. */
   function handleSubmit(evt) {
     evt.preventDefault();
-    handleSave({ ...formData, key: uuid() });
+    handleSave({ ...formData});
     setFormData({ title: "", description: "", priority: "" });
   }
 
