@@ -1,5 +1,6 @@
 import React from "react";
 import EditableTodo from "./EditableTodo";
+import { v4 as uuid } from 'uuid';
 
 /** Show list of editable todos.
  *
@@ -17,6 +18,7 @@ function EditableTodoList({ todos, update, remove }) {
       {/*   FIXME  */}
       {todos.map(todo =>
         <EditableTodo
+          key = {uuid()}
           todo={todo}
           updateTodo={update}
           deleteTodo={remove}

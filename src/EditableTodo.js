@@ -18,13 +18,12 @@ function EditableTodo({ todo, updateTodo, deleteTodo }) {
    * toggleEdit and directly on component
    * check if truthy in return statement to render TodoForm
    */
-  let curElement;
+
+  const [isEditing, setIsEditing] = useState(false);
+
   /** Toggle if this is being edited */
-  function toggleEdit(evt) {
-    const curTodo = evt.target;
-    curTodo.classList.toggle("isEditing");
-    curElement = curTodo;
-    console.log(curTodo);
+  function toggleEdit() {
+    setIsEditing(!isEditing);
   }
 
   /** Call remove fn passed to this. */
@@ -34,17 +33,15 @@ function EditableTodo({ todo, updateTodo, deleteTodo }) {
 
   /** Edit form saved; toggle isEditing and update in ancestor. */
   function handleSave(formData) {
+    toggleEdit();
     updateTodo(formData);
   }
-
-  console.log("todo", todo);
-  console.log("curElement", curElement);
 
   // {initialFormData, handleSave}
   return (
     <div className="EditableTodo" >
 
-      {curElement?.classList.contains("isEditing") ?
+      {(isEditing) ?
         <TodoForm initialFormData={todo} handleSave={handleSave} />
         : <div className="mb-3">
           <div className="float-end text-sm-end">
@@ -59,7 +56,7 @@ function EditableTodo({ todo, updateTodo, deleteTodo }) {
               Del
             </button>
           </div>
-          <Todo />
+          <Todo  todos={todo} />
         </div>}
 
     </div>

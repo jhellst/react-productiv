@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { v4 as uuid } from 'uuid';
 
 
 /** Form for adding.
@@ -12,20 +13,24 @@ import React, { useState } from "react";
 
 function TodoForm({initialFormData, handleSave}) {
 
+  const [formData, setFormData] = useState(initialFormData);
+
   /** Update form input. */
   function handleChange(evt) {
     const { name, value } = evt.target;
-    handleSave(formData => ({
+    console.log("NAME", name.val, "VAL", value.val);
+    setFormData(formData => ({
       ...formData,
       [name]: value,
     }));
   }
 
-  /** Call parent function and clear form. */
+
+  /** Submit form: call function from parent & clear inputs. */
   function handleSubmit(evt) {
     evt.preventDefault();
-    // addBox(formData);
-    handleSave(initialFormData);
+    handleSave({ ...formData, key: uuid() });
+    setFormData({ height: "", width: "", backgroundColor: "" });
   }
 
   return (
@@ -38,7 +43,7 @@ function TodoForm({initialFormData, handleSave}) {
               className="form-control"
               placeholder="Title"
               onChange={handleChange}
-              value="FIXME"
+              value={initialFormData.title}
               aria-label="Title"
           />
         </div>
@@ -50,7 +55,7 @@ function TodoForm({initialFormData, handleSave}) {
               className="form-control"
               placeholder="Description"
               onChange={handleChange}
-              value="FIXME"
+              value={initialFormData.description}
               aria-label="Description"
           />
         </div>
@@ -62,7 +67,7 @@ function TodoForm({initialFormData, handleSave}) {
             </label>
             <select id="newTodo-priority"
                     name="priority"
-                    value="FIXME"
+                    value={initialFormData.priority}
                     onChange={handleChange}
                     className="form-control form-control-sm d-inline-flex"
             >

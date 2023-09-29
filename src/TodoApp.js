@@ -21,6 +21,8 @@ function TodoApp({ initialTodos = [] }) {
 
   /** add a new todo to list */
   function create(newTodo) {
+    const id = uuid();
+    newTodo.id = id;
     setTodos(todos => [...todos, newTodo]);
   }
 
@@ -54,7 +56,7 @@ function TodoApp({ initialTodos = [] }) {
 
           <section>
             <h3 className="mb-3">Add Nü</h3>
-            <TodoForm />
+            <TodoForm initialFormData={{title:"", description:"", priority:1}} handleSave={create} />
           </section>
         </div>
 
