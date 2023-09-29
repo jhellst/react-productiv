@@ -12,12 +12,19 @@ import TodoForm from "./TodoForm";
  * EditableTodoList -> EditableTodo -> { Todo, TodoForm }
  */
 
-function EditableTodo({todo, updateTodo, deleteTodo}) {
-
+function EditableTodo({ todo, updateTodo, deleteTodo }) {
+  /**
+   * TODO: add state to keep track of isEditing or not, toggle true/false in
+   * toggleEdit and directly on component
+   * check if truthy in return statement to render TodoForm
+   */
+  let curElement;
   /** Toggle if this is being edited */
   function toggleEdit(evt) {
     const curTodo = evt.target;
     curTodo.classList.toggle("isEditing");
+    curElement = curTodo;
+    console.log(curTodo);
   }
 
   /** Call remove fn passed to this. */
@@ -27,36 +34,35 @@ function EditableTodo({todo, updateTodo, deleteTodo}) {
 
   /** Edit form saved; toggle isEditing and update in ancestor. */
   function handleSave(formData) {
-    updateTodo();
+    updateTodo(formData);
   }
+
+  console.log("todo", todo);
+  console.log("curElement", curElement);
 
   // {initialFormData, handleSave}
   return (
-      <div className="EditableTodo">
+    <div className="EditableTodo" >
 
-                EITHER
+      {curElement?.classList.contains("isEditing") ?
+        <TodoForm initialFormData={todo} handleSave={handleSave} />
+        : <div className="mb-3">
+          <div className="float-end text-sm-end">
+            <button
+              className="EditableTodo-toggle btn-link btn btn-sm"
+              onClick={toggleEdit}>
+              Edit
+            </button>
+            <button
+              className="EditableTodo-delBtn btn-link btn btn-sm text-danger"
+              onClick={handleDelete}>
+              Del
+            </button>
+          </div>
+          <Todo />
+        </div>}
 
-                <TodoForm initialFormData={todo} handleSave={handleSave}/>
-
-                OR
-
-                <div className="mb-3">
-                  <div className="float-end text-sm-end">
-                    <button
-                        className="EditableTodo-toggle btn-link btn btn-sm"
-                        onClick={toggleEdit}>
-                      Edit
-                    </button>
-                    <button
-                        className="EditableTodo-delBtn btn-link btn btn-sm text-danger"
-                        onClick={handleDelete}>
-                      Del
-                    </button>
-                  </div>
-                  <Todo />
-                </div>
-
-      </div>
+    </div>
   );
 }
 
